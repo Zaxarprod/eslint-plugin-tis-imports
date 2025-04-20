@@ -1,0 +1,29 @@
+{
+  "name": "eslint-plugin-tis-imports",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "type": "commonjs",
+  "author": "Zaxarprod",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "eslint",
+    "plugin",
+    "fsd",
+    "architecture"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "compile": "tsc -p tsconfig.json --noEmit"
+  },
+  "peerDependencies": {
+    "eslint": ">=9"
+  },
+  "devDependencies": {
+    "@types/eslint": "^9.6.1",
+    "@types/estree": "^1.0.7",
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3"
+  }
+}

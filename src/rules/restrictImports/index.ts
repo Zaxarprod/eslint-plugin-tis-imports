@@ -1,0 +1,1 @@
+export { restrictImportsRule } from './rule'
