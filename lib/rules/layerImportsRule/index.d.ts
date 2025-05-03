@@ -1,1 +1,0 @@
-export { layersImportRule } from './rule';

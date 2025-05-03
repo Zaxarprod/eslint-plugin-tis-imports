@@ -1,1 +1,0 @@
-export { enforceEntityHierarchyRule } from './rule';
