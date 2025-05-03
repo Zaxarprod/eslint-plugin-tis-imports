@@ -74,7 +74,7 @@ export const createLayerImportsRule = (args: {
                 }
             }
 
-            if (importLayerOrder < currentLayerOrder) {
+            if (importLayerOrder < currentLayerOrder || importLayerOrder === currentLayerOrder && !notStrictLayersSet?.has(currentLayer)) {
                 report({
                     node,
                     messageId: 'wrongDirection',

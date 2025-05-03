@@ -1,9 +1,13 @@
 {
   "name": "eslint-plugin-tis-imports",
-  "version": "1.0.0",
+  "license": "ISC",
+  "version": "1.0.1",
   "main": "lib/index.js",
   "type": "commonjs",
   "author": "Zaxarprod",
+  "description": "Eslint plugin for precise control of architectural restrictions. FSD, public api, hierarchy of entities in the project.",
+  "repository": "https://github.com/Zaxarprod/eslint-plugin-tis-imports",
+  "homepage": "https://github.com/Zaxarprod/eslint-plugin-tis-imports#readme",
   "files": [
     "lib"
   ],
@@ -11,11 +15,17 @@
     "eslint",
     "plugin",
     "fsd",
-    "architecture"
+    "architecture",
+    "feature-sliced",
+    "eslint-plugin",
+    "eslintplugin",
+    "fsd-eslint",
+    "eslint-fsd"
   ],
   "scripts": {
     "build": "tsc",
-    "compile": "tsc -p tsconfig.json --noEmit"
+    "compile": "tsc -p tsconfig.json --noEmit",
+    "test": "mocha --require ts-node/register \"tests/**/*.test.ts\""
   },
   "peerDependencies": {
     "eslint": ">=9"
@@ -24,6 +34,11 @@
     "@types/eslint": "^9.6.1",
     "@types/estree": "^1.0.7",
     "@types/node": "^22.14.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "@typescript-eslint/utils": "^8.31.1",
+    "eslint": "^9.26.0",
+    "mocha": "^11.2.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
 }

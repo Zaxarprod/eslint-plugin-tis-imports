@@ -1,5 +1,5 @@
 import { Rule } from 'eslint';
-import { EnforceEntityHierarchyOptions, EntityHierarchyError, CachedEnforceEntityHierarchyOptions } from './types';
+import { EntityHierarchyError } from './types';
 import { createEnforceEntityHierarchyRule, DEFAULT_ALIAS } from './createEntitiesHierarchy';
 
 const PROPERTIES: Exclude<Rule.RuleModule['meta'], undefined>['schema'] = {

@@ -18,7 +18,7 @@ npm install eslint-plugin-tis-imports --save-dev
 
 ## Usage
 
-Add `fsd-import` to the plugins section of your `.eslintrc` configuration file. You can omit the `eslint-plugin-` prefix:
+Add `tis-imports` to the plugins section of your `.eslint.config.mjs` configuration file. You can omit the `eslint-plugin-` prefix:
 
 ```mjs
 import tisImportsPlugin from 'eslint-plugin-tis-imports'
