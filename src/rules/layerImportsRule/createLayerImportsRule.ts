@@ -7,18 +7,22 @@ import { getSubfolderAfterLayer } from '../utils/layers';
 
 
 export const DEFAULT_LAYERS = ['app', 'pages', 'widgets', 'features', 'entities', 'shared'];
+export const DEFAULT_CHECK_RELATIVE_PATH_LAYERS = ['app', 'pages', 'widgets', 'features', 'entities'];
 export const DEFAULT_ALIAS = '~'
 
 const getCachedOptions = createCachedOptions((options: LayerImportsRuleOptions): CachedLayerImportsRuleOptions => {
     const layers = options.layers ?? DEFAULT_LAYERS
     const alias = options.alias ?? DEFAULT_ALIAS
+    const checkRelativePathLayers = options.checkRelativePathLayers ?? DEFAULT_CHECK_RELATIVE_PATH_LAYERS
 
     return ({
         ...options,
         layers,
         alias,
+        checkRelativePathLayers,
         publicApiEnabled: options.publicApiEnabled ?? false,
         publicApiExcludeLayersSet: new Set(options.publicApiExcludeLayers ?? []),
+        checkRelativePathLayersSet: new Set(checkRelativePathLayers),
         layersSet: new Set(layers),
         layersOrderMap: createLayersOrderMap(layers),
         notStrictLayersSet: options.notStrictLayers ? new Set(options.notStrictLayers) : undefined,
@@ -34,7 +38,7 @@ export const createLayerImportsRule = (args: {
 
     const resultOptions = getCachedOptions(options)
 
-    const { alias, layersSet, notStrictLayersSet, layersOrderMap, publicApiEnabled, publicApiExcludeLayersSet } = resultOptions
+    const { alias, layersSet, notStrictLayersSet, layersOrderMap, publicApiEnabled, publicApiExcludeLayersSet, checkRelativePathLayersSet } = resultOptions
 
     const currentFilePath = filename
     const relativePath = path.relative(process.cwd(), currentFilePath);
@@ -65,7 +69,7 @@ export const createLayerImportsRule = (args: {
             const currentLayerOrder = layersOrderMap.get(currentLayer) ?? 0
             const importLayerOrder = layersOrderMap.get(importLayer) ?? 0
 
-            if (notStrictLayersSet) {
+            if (notStrictLayersSet && checkRelativePathLayersSet?.has(importLayer)) {
                 if (currentLayerOrder === importLayerOrder &&
                     notStrictLayersSet.has(currentLayer) &&
                     !checkRelativePath({ path: importPath })

@@ -4,6 +4,7 @@ export type LayerImportsRuleOptions = {
     publicApiEnabled?: boolean
     notStrictLayers?: string[]
     publicApiExcludeLayers?: string[]
+    checkRelativePathLayers?: string[]
 }
 
 export type CachedLayerImportsRuleOptions = {
@@ -16,6 +17,8 @@ export type CachedLayerImportsRuleOptions = {
     notStrictLayersSet?: Set<string>
     publicApiExcludeLayers?: string[]
     publicApiExcludeLayersSet?: Set<string>
+    checkRelativePathLayers?: string[]
+    checkRelativePathLayersSet?: Set<string>
 }
 
 export type LayerImportError = 'sameLayerAlias' | 'wrongDirection' | 'publicApiError'

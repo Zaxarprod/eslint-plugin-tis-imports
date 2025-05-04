@@ -20,6 +20,10 @@ const PROPERTIES: Exclude<Rule.RuleModule['meta'], undefined>['schema'] = {
             type: 'array',
             items: { type: 'string' },
         },
+        checkRelativePathLayers: {
+            type: 'array',
+            items: { type: 'string' },
+        },
     },
     required: ['layers', 'alias'],
     additionalProperties: false,
