@@ -18,6 +18,7 @@ const getCachedOptions = createCachedOptions((options: LayerImportsRuleOptions):
         layers,
         alias,
         publicApiEnabled: options.publicApiEnabled ?? false,
+        publicApiExcludeLayersSet: new Set(options.publicApiExcludeLayers ?? []),
         layersSet: new Set(layers),
         layersOrderMap: createLayersOrderMap(layers),
         notStrictLayersSet: options.notStrictLayers ? new Set(options.notStrictLayers) : undefined,
@@ -33,7 +34,7 @@ export const createLayerImportsRule = (args: {
 
     const resultOptions = getCachedOptions(options)
 
-    const { alias, layersSet, notStrictLayersSet, layersOrderMap, publicApiEnabled } = resultOptions
+    const { alias, layersSet, notStrictLayersSet, layersOrderMap, publicApiEnabled, publicApiExcludeLayersSet } = resultOptions
 
     const currentFilePath = filename
     const relativePath = path.relative(process.cwd(), currentFilePath);
@@ -95,7 +96,7 @@ export const createLayerImportsRule = (args: {
                 });
             }
 
-            if (publicApiEnabled && currentLayer !== importLayer) {
+            if (publicApiEnabled && currentLayer !== importLayer && !publicApiExcludeLayersSet?.has(importLayer)) {
                 const innerLayerFolders = resolvedImportPath.split(`${importLayer}/`)[1]
 
                 const innerLayerFoldersLength = innerLayerFolders?.split('/').length ?? 0

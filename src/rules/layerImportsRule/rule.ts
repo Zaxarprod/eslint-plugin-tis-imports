@@ -16,6 +16,10 @@ const PROPERTIES: Exclude<Rule.RuleModule['meta'], undefined>['schema'] = {
             type: 'array',
             items: { type: 'string' },
         },
+        publicApiExcludeLayers: {
+            type: 'array',
+            items: { type: 'string' },
+        },
     },
     required: ['layers', 'alias'],
     additionalProperties: false,
