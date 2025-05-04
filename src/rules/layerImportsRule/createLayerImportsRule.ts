@@ -69,9 +69,12 @@ export const createLayerImportsRule = (args: {
             const currentLayerOrder = layersOrderMap.get(currentLayer) ?? 0
             const importLayerOrder = layersOrderMap.get(importLayer) ?? 0
 
+            const importSubfolder = getSubfolderAfterLayer(resolvedImportPath, importLayer)
+
             if (notStrictLayersSet && checkRelativePathLayersSet?.has(importLayer)) {
                 if (currentLayerOrder === importLayerOrder &&
                     notStrictLayersSet.has(currentLayer) &&
+                    currentSubfolder !== importSubfolder &&
                     !checkRelativePath({ path: importPath })
                 ) {
                     report({
@@ -81,8 +84,6 @@ export const createLayerImportsRule = (args: {
                     })
                 }
             }
-
-            const importSubfolder = getSubfolderAfterLayer(resolvedImportPath, importLayer)
 
             if (importLayerOrder === currentLayerOrder && !notStrictLayersSet?.has(currentLayer) && currentSubfolder && importSubfolder && currentSubfolder !== importSubfolder) {
                 report({
