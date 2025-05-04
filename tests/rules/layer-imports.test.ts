@@ -199,3 +199,77 @@ ruleTester.run(`layer-imports public api rule`, layersImportRule, {
     },
   ],
 });
+
+ruleTester.run(`layer-imports notStrictLayers=['entities'], same layers`, layersImportRule, {
+  valid: [
+    {
+      code: "import { something } from './utils';",
+      filename: 'src/entities/user/index.ts',
+      options: [
+        {
+          alias: '~',
+          layers: ['app', 'pages', 'widgets', 'features', 'entities', 'shared'],
+          notStrictLayers: ['entities'],
+        },
+      ],
+    },
+  ],
+  invalid: [
+    {
+      code: "import { something } from '~/entities/user';",
+      filename: 'src/entities/booking/index.ts',
+      options: [
+        {
+          alias: '~',
+          layers: ['app', 'pages', 'widgets', 'features', 'entities', 'shared'],
+          notStrictLayers: ['entities'],
+        },
+      ],
+      errors: [
+        {
+          messageId: 'sameLayerAlias',
+          data: {
+            currentLayer: 'entities',
+          },
+        },
+      ],
+    },
+  ],
+});
+
+ruleTester.run(`layer-imports public api rule`, layersImportRule, {
+  valid: [
+    {
+      code: "import { something } from '~/entities/user';",
+      filename: 'src/features/booking/index.ts',
+      options: [
+        {
+          alias: '~',
+          layers: ['app', 'pages', 'widgets', 'features', 'entities', 'shared'],
+          publicApiEnabled: true,
+        },
+      ],
+    },
+  ],
+  invalid: [
+    {
+      code: "import { something } from '~/entities/user/something';",
+      filename: 'src/features/booking/index.ts',
+      options: [
+        {
+          alias: '~',
+          layers: ['app', 'pages', 'widgets', 'features', 'entities', 'shared'],
+          publicApiEnabled: true,
+        },
+      ],
+      errors: [
+        {
+          messageId: 'publicApiError',
+          data: {
+            currentLayer: 'entities',
+          },
+        },
+      ],
+    },
+  ],
+});

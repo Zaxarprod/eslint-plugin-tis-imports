@@ -3,6 +3,7 @@ import { ImportDeclaration } from "estree";
 
 import { CachedLayerImportsRuleOptions, LayerImportError, LayerImportsRuleOptions } from "./types";
 import { checkRelativePath, createCachedOptions, createLayersOrderMap, getLayer, normalizeFilePathFromImport } from "../utils";
+import { getSubfolderAfterLayer } from '../utils/layers';
 
 
 export const DEFAULT_LAYERS = ['app', 'pages', 'widgets', 'features', 'entities', 'shared'];
@@ -43,6 +44,8 @@ export const createLayerImportsRule = (args: {
         layersSet,
     });
 
+    const currentSubfolder = currentLayer ? getSubfolderAfterLayer(relativePath, currentLayer) : null
+
     return {
         ImportDeclaration(node: ImportDeclaration) {
             // Get all paths
@@ -74,7 +77,17 @@ export const createLayerImportsRule = (args: {
                 }
             }
 
-            if (importLayerOrder < currentLayerOrder || importLayerOrder === currentLayerOrder && !notStrictLayersSet?.has(currentLayer)) {
+            const importSubfolder = getSubfolderAfterLayer(resolvedImportPath, importLayer)
+
+            if (importLayerOrder === currentLayerOrder && !notStrictLayersSet?.has(currentLayer) && currentSubfolder && importSubfolder && currentSubfolder !== importSubfolder) {
+                report({
+                    node,
+                    messageId: 'wrongDirection',
+                    data: { importingLayer: importLayer, currentLayer },
+                });
+            }
+
+            if (importLayerOrder < currentLayerOrder ) {
                 report({
                     node,
                     messageId: 'wrongDirection',

@@ -22,3 +22,12 @@ export const getLayer = (args: {
 
     return layer ?? null
 }
+
+export const getSubfolderAfterLayer = (absolutePath: string, layer: string): string | null => {
+    const normalized = absolutePath.replace(/\\/g, '/');
+    const parts = normalized.split(`${layer}/`);
+    if (parts.length < 2) return null;
+  
+    const rest = parts[1].split('/');
+    return rest[0] ?? null;
+}
