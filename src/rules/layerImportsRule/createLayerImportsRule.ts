@@ -74,7 +74,7 @@ export const createLayerImportsRule = (args: {
             if (notStrictLayersSet && checkRelativePathLayersSet?.has(importLayer)) {
                 if (currentLayerOrder === importLayerOrder &&
                     notStrictLayersSet.has(currentLayer) &&
-                    currentSubfolder !== importSubfolder &&
+                    currentSubfolder === importSubfolder &&
                     !checkRelativePath({ path: importPath })
                 ) {
                     report({
