@@ -52,6 +52,7 @@ ruleTester.run('entities-hierarchy common tests', enforceEntityHierarchyRule, {
 });
 
 ruleTester.run('entities-hierarchy empty checkingLayers', enforceEntityHierarchyRule, {
+    // По иерархии user ниже, но ошибки, нет так как checkingLayers пустой
     valid: [
       {
         code: "import { something } from '~/entities/booking';",
@@ -87,4 +88,49 @@ ruleTester.run('entities-hierarchy empty checkingLayers', enforceEntityHierarchy
           ],
       },
     ],
+  });
+
+  ruleTester.run('entities-hierarchy does not check deep nesting', enforceEntityHierarchyRule, {
+    valid: [
+      {
+        code: "import { BaseRoleT } from '~/entities/role';",
+        filename: 'src/entities/transactions/mappers/common/mapTransactionUserToClient.ts',
+        options: [
+          {
+            checkingLayers: ['entities', 'features', 'widgets'],
+            alias: '~',
+            hierarchy: [
+              'booking',
+              'salaryCalculation',
+              'transaction',
+              'transactions',
+              'transactionTags',
+              'orders',
+              'quest',
+              'guest',
+              'rfm',
+              'salaryMod',
+              'shift',
+              'floorPlan',
+              'questSettings',
+              'questSettingsV1',
+              'salarySetting',
+              'fineSetting',
+              'floorSetting',
+              'account',
+              'category',
+              'user',
+              'role',
+              'geo',
+              'domain',
+              'spot',
+              'product',
+              'document',
+              'common',
+            ],
+          },
+        ],
+      },
+    ],
+    invalid: [],
   });

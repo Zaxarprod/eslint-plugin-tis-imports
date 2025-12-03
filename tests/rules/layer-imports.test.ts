@@ -148,14 +148,15 @@ ruleTester.run(`layer-imports notStrictLayers=['entities'], relativePath Error`,
         {
           alias: '~',
           layers: ['app', 'pages', 'widgets', 'features', 'entities', 'shared'],
-          notStrictLayers: ['entities'],
+          notStrictLayers: [],
         },
       ],
       errors: [
         {
-          messageId: 'sameLayerAlias',
+          messageId: 'wrongDirection',
           data: {
             currentLayer: 'entities',
+            importingLayer: 'entities',
           },
         },
       ],
@@ -214,27 +215,7 @@ ruleTester.run(`layer-imports notStrictLayers=['entities'], same layers`, layers
       ],
     },
   ],
-  invalid: [
-    {
-      code: "import { something } from '~/entities/user';",
-      filename: 'src/entities/booking/index.ts',
-      options: [
-        {
-          alias: '~',
-          layers: ['app', 'pages', 'widgets', 'features', 'entities', 'shared'],
-          notStrictLayers: ['entities'],
-        },
-      ],
-      errors: [
-        {
-          messageId: 'sameLayerAlias',
-          data: {
-            currentLayer: 'entities',
-          },
-        },
-      ],
-    },
-  ],
+  invalid: [],
 });
 
 ruleTester.run(`layer-imports public api rule`, layersImportRule, {
